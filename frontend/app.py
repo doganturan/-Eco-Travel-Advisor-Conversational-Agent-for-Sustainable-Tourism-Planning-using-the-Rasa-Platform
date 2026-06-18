@@ -92,6 +92,15 @@ st.markdown(
         background: #f3f4f6;
         margin-top: 4px;
     }
+
+    .eco-card,
+    .eco-card *,
+    .warning-box,
+    .warning-box *,
+    .handover-box,
+    .handover-box * {
+    color: #111827;
+}
     </style>
     """,
     unsafe_allow_html=True
