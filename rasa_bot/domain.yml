@@ -103,7 +103,7 @@ slots:
 
   handover_required:
     type: bool
-    influence_conversation: true
+    influence_conversation: false
     mappings:
       - type: custom
 
@@ -111,7 +111,7 @@ slots:
     type: float
     min_value: 0.0
     max_value: 3.0
-    influence_conversation: true
+    influence_conversation: false
     mappings:
       - type: custom
 

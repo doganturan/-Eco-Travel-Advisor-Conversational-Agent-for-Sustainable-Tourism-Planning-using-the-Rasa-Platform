@@ -4,68 +4,61 @@ stories:
 
   - story: test greeting flow
     steps:
-      - user: |
-          hi
-        intent: greet
+      - intent: greet
       - action: utter_greet
       - action: utter_explain_purpose
       - action: utter_privacy_notice
 
   - story: test happy path eco trip planning
     steps:
-      - user: |
-          hi
-        intent: greet
+      - intent: greet
       - action: utter_greet
       - action: utter_explain_purpose
       - action: utter_privacy_notice
 
-      - user: |
-          I want to plan an eco trip
-        intent: start_trip_planning
+      - intent: start_trip_planning
       - action: utter_ask_origin
 
-      - user: |
-          I am travelling from Berlin
-        intent: provide_origin
+      - intent: provide_origin
         entities:
           - origin: Berlin
       - slot_was_set:
           - origin: Berlin
       - action: utter_ask_destination
 
-      - user: |
-          I want to go to Amsterdam
-        intent: provide_destination
+      - intent: provide_destination
         entities:
           - destination: Amsterdam
       - slot_was_set:
           - destination: Amsterdam
       - action: utter_ask_travel_dates
 
-      - user: |
-          next weekend
-        intent: provide_dates
+      - intent: provide_dates
         entities:
           - travel_date: next weekend
       - slot_was_set:
           - travel_dates: next weekend
       - action: utter_ask_budget
 
-      - user: |
-          300 euros
-        intent: provide_budget
+      - intent: provide_budget
         entities:
           - budget: 300 euros
       - slot_was_set:
           - budget: 300 euros
       - action: utter_ask_sustainability_preference
 
-  - story: test recommendation request
-    steps:
-      - user: |
-          show me recommendations
-        intent: ask_recommendations
+      - intent: provide_sustainability_preference
+        entities:
+          - sustainability_preference: high
+      - slot_was_set:
+          - sustainability_preference: high
+      - action: utter_ask_transport_preference
+
+      - intent: provide_transport_preference
+        entities:
+          - transport_preference: train
+      - slot_was_set:
+          - transport_preference: train
       - action: utter_recommendation_intro
       - action: action_recommend_transport
       - action: action_calculate_carbon_impact
@@ -73,36 +66,41 @@ stories:
       - action: action_recommend_hotels
       - action: action_recommend_activities
 
+  - story: test recommendation request
+    steps:
+      - intent: ask_recommendations
+      - action: utter_recommendation_intro
+      - action: action_recommend_transport
+      - action: action_calculate_carbon_impact
+      - action: action_rank_options
+      - action: action_recommend_hotels
+      - action: action_recommend_activities
+
+  - story: test carbon impact request
+    steps:
+      - intent: ask_carbon_impact
+      - action: action_calculate_carbon_impact
+
   - story: test carbon offset request
     steps:
-      - user: |
-          show carbon offset options
-        intent: ask_carbon_offset
+      - intent: ask_carbon_offset
       - action: utter_carbon_offset_intro
       - action: action_carbon_offset_info
 
   - story: test trip summary request
     steps:
-      - user: |
-          trip summary please
-        intent: ask_trip_summary
+      - intent: ask_trip_summary
       - action: utter_trip_summary_intro
       - action: action_trip_summary
 
   - story: test human handover confirmation
     steps:
-      - user: |
-          I want to talk to a human advisor
-        intent: request_human_handover
+      - intent: request_human_handover
       - action: utter_handover_offer
-      - user: |
-          yes
-        intent: affirm
+      - intent: affirm
       - action: action_prepare_handover
 
   - story: test fallback repair
     steps:
-      - user: |
-          asdjkh qweqwe random
-        intent: out_of_scope
+      - intent: out_of_scope
       - action: action_default_fallback
