@@ -1,0 +1,111 @@
+version: "3.1"
+
+nlu:
+  - intent: greet
+    examples: |
+      - hello
+      - hi there
+      - good morning
+
+  - intent: goodbye
+    examples: |
+      - goodbye
+      - thanks bye
+      - I am done
+
+  - intent: start_trip_planning
+    examples: |
+      - I want to plan an eco trip
+      - help me create a sustainable travel plan
+      - plan a low carbon city break for me
+
+  - intent: provide_origin
+    examples: |
+      - I am travelling from [Berlin](origin)
+      - my origin is [Berlin](origin)
+      - I will start in [Berlin](origin)
+
+  - intent: provide_destination
+    examples: |
+      - I want to go to [Amsterdam](destination)
+      - my destination is [Copenhagen](destination)
+      - I am visiting [Munich](destination)
+
+  - intent: provide_dates
+    examples: |
+      - I travel on [next weekend](travel_date)
+      - I will go for [three days](travel_date)
+      - the trip is [in August](travel_date)
+
+  - intent: provide_budget
+    examples: |
+      - my budget is [300 euros](budget)
+      - I can spend [250 euros](budget)
+      - keep it under [600 EUR](budget)
+
+  - intent: provide_sustainability_preference
+    examples: |
+      - sustainability is [high](sustainability_preference)
+      - [medium](sustainability_preference) sustainability is fine
+      - I want the lowest carbon option
+
+  - intent: provide_transport_preference
+    examples: |
+      - I prefer [train](transport_preference)
+      - choose [bus](transport_preference)
+      - I have [no preference](transport_preference)
+
+  - intent: ask_recommendations
+    examples: |
+      - show me recommendations
+      - recommend options
+      - show the ranked options
+
+  - intent: ask_carbon_impact
+    examples: |
+      - what is the carbon impact
+      - calculate the carbon footprint
+      - compare carbon emissions
+
+  - intent: ask_carbon_offset
+    examples: |
+      - show carbon offset options
+      - can I offset the trip
+      - suggest offset information
+
+  - intent: ask_trip_summary
+    examples: |
+      - trip summary please
+      - summarize my trip
+      - show final travel plan
+
+  - intent: request_human_handover
+    examples: |
+      - I want to talk to a human
+      - connect me with a travel advisor
+      - human help please
+
+  - intent: change_preferences
+    examples: |
+      - I want to change my preferences
+      - make it cheaper
+      - change to train
+
+  - intent: affirm
+    examples: |
+      - yes
+      - yes please
+      - go ahead
+
+  - intent: deny
+    examples: |
+      - no
+      - no thanks
+      - continue with the bot
+
+  - intent: out_of_scope
+    examples: |
+      - what is the weather today
+      - order pizza
+      - asdjkh qweqwe random
+      - qwerty unknown message
