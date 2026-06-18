@@ -1,0 +1,69 @@
+version: "3.1"
+
+rules:
+
+  - rule: Greet user and explain purpose
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - action: utter_explain_purpose
+      - action: utter_privacy_notice
+
+  - rule: Start trip planning
+    steps:
+      - intent: start_trip_planning
+      - action: utter_ask_origin
+
+  - rule: Say goodbye
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - rule: Handle out of scope message
+    steps:
+      - intent: out_of_scope
+      - action: utter_out_of_scope
+
+  - rule: Handle low confidence fallback
+    steps:
+      - intent: nlu_fallback
+      - action: action_default_fallback
+
+  - rule: User asks for recommendations
+    steps:
+      - intent: ask_recommendations
+      - action: utter_recommendation_intro
+      - action: action_recommend_transport
+      - action: action_calculate_carbon_impact
+      - action: action_rank_options
+      - action: action_recommend_hotels
+      - action: action_recommend_activities
+
+  - rule: User asks about carbon impact
+    steps:
+      - intent: ask_carbon_impact
+      - action: action_calculate_carbon_impact
+
+  - rule: User asks for carbon offset information
+    steps:
+      - intent: ask_carbon_offset
+      - action: utter_carbon_offset_intro
+      - action: action_carbon_offset_info
+
+  - rule: User asks for final trip summary
+    steps:
+      - intent: ask_trip_summary
+      - action: utter_trip_summary_intro
+      - action: action_trip_summary
+
+  - rule: User requests human advisor
+    steps:
+      - intent: request_human_handover
+      - action: utter_handover_offer
+      - action: action_prepare_handover
+
+  - rule: User wants to change preferences
+    steps:
+      - intent: change_preferences
+      - action: utter_change_preferences
+      - action: action_ask_missing_slot

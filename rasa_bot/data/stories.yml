@@ -1,0 +1,155 @@
+version: "3.1"
+
+stories:
+
+  - story: happy path eco trip planning
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - action: utter_explain_purpose
+      - action: utter_privacy_notice
+      - intent: start_trip_planning
+      - action: utter_ask_origin
+      - intent: provide_origin
+        entities:
+          - origin: Berlin
+      - slot_was_set:
+          - origin: Berlin
+      - action: utter_ask_destination
+      - intent: provide_destination
+        entities:
+          - destination: Amsterdam
+      - slot_was_set:
+          - destination: Amsterdam
+      - action: utter_ask_travel_dates
+      - intent: provide_dates
+        entities:
+          - travel_date: next weekend
+      - slot_was_set:
+          - travel_dates: next weekend
+      - action: utter_ask_budget
+      - intent: provide_budget
+        entities:
+          - budget: 300 euros
+      - slot_was_set:
+          - budget: 300 euros
+      - action: utter_ask_sustainability_preference
+      - intent: provide_sustainability_preference
+        entities:
+          - sustainability_preference: high
+      - slot_was_set:
+          - sustainability_preference: high
+      - action: utter_ask_transport_preference
+      - intent: provide_transport_preference
+        entities:
+          - transport_preference: train
+      - slot_was_set:
+          - transport_preference: train
+      - action: utter_recommendation_intro
+      - action: action_recommend_transport
+      - action: action_calculate_carbon_impact
+      - action: action_rank_options
+      - action: action_recommend_hotels
+      - action: action_recommend_activities
+
+  - story: missing origin flow
+    steps:
+      - intent: provide_destination
+        entities:
+          - destination: Copenhagen
+      - slot_was_set:
+          - destination: Copenhagen
+      - action: utter_ask_origin
+      - intent: provide_origin
+        entities:
+          - origin: Berlin
+      - slot_was_set:
+          - origin: Berlin
+      - action: action_ask_missing_slot
+
+  - story: missing destination flow
+    steps:
+      - intent: provide_origin
+        entities:
+          - origin: Berlin
+      - slot_was_set:
+          - origin: Berlin
+      - action: utter_ask_destination
+      - intent: provide_destination
+        entities:
+          - destination: Munich
+      - slot_was_set:
+          - destination: Munich
+      - action: action_ask_missing_slot
+
+  - story: user asks for recommendations after slots
+    steps:
+      - intent: ask_recommendations
+      - action: utter_recommendation_intro
+      - action: action_recommend_transport
+      - action: action_calculate_carbon_impact
+      - action: action_rank_options
+      - action: action_recommend_hotels
+      - action: action_recommend_activities
+
+  - story: user asks carbon impact
+    steps:
+      - intent: ask_carbon_impact
+      - action: action_calculate_carbon_impact
+
+  - story: user asks offset info
+    steps:
+      - intent: ask_carbon_offset
+      - action: utter_carbon_offset_intro
+      - action: action_carbon_offset_info
+
+  - story: user asks final summary
+    steps:
+      - intent: ask_trip_summary
+      - action: utter_trip_summary_intro
+      - action: action_trip_summary
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - story: user changes preferences and reranks
+    steps:
+      - intent: change_preferences
+      - action: utter_change_preferences
+      - action: action_ask_missing_slot
+      - intent: provide_sustainability_preference
+        entities:
+          - sustainability_preference: medium
+      - slot_was_set:
+          - sustainability_preference: medium
+      - action: action_rank_options
+      - action: action_recommend_transport
+      - action: action_recommend_hotels
+      - action: action_recommend_activities
+
+  - story: user requests human handover
+    steps:
+      - intent: request_human_handover
+      - action: utter_handover_offer
+      - action: action_prepare_handover
+
+  - story: fallback then valid answer
+    steps:
+      - intent: nlu_fallback
+      - action: action_default_fallback
+      - intent: start_trip_planning
+      - action: utter_ask_origin
+
+  - story: fallback then human handover
+    steps:
+      - intent: nlu_fallback
+      - action: action_default_fallback
+      - intent: request_human_handover
+      - action: utter_handover_offer
+      - action: action_prepare_handover
+
+  - story: out of scope then return to main flow
+    steps:
+      - intent: out_of_scope
+      - action: utter_out_of_scope
+      - intent: start_trip_planning
+      - action: utter_ask_origin

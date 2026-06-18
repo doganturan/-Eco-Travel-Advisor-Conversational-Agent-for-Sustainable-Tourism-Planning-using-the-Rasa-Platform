@@ -1,0 +1,216 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - start_trip_planning
+  - provide_origin
+  - provide_destination
+  - provide_dates
+  - provide_budget
+  - provide_sustainability_preference
+  - provide_transport_preference
+  - ask_recommendations
+  - ask_carbon_impact
+  - ask_carbon_offset
+  - ask_trip_summary
+  - request_human_handover
+  - change_preferences
+  - affirm
+  - deny
+  - out_of_scope
+  - nlu_fallback
+
+entities:
+  - origin
+  - destination
+  - travel_date
+  - budget
+  - sustainability_preference
+  - transport_preference
+
+slots:
+  origin:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: origin
+
+  destination:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: destination
+
+  travel_dates:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: travel_date
+
+  budget:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: budget
+
+  sustainability_preference:
+    type: categorical
+    values:
+      - low
+      - medium
+      - high
+      - very sustainable
+      - eco
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: sustainability_preference
+
+  transport_preference:
+    type: categorical
+    values:
+      - train
+      - bus
+      - flight
+      - no preference
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: transport_preference
+
+  selected_transport:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  selected_hotel:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  selected_activity:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  handover_required:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: custom
+
+  fallback_count:
+    type: float
+    min_value: 0.0
+    max_value: 3.0
+    influence_conversation: true
+    mappings:
+      - type: custom
+
+responses:
+  utter_greet:
+    - text: "Hello! I am Eco-Travel Advisor. I can help you plan a lower-carbon trip with transport, hotel and activity suggestions."
+
+  utter_explain_purpose:
+    - text: "I will ask a few short questions about your trip, then compare options using carbon impact, price and your sustainability preference."
+
+  utter_ask_origin:
+    - text: "Where are you travelling from?"
+
+  utter_ask_destination:
+    - text: "What is your destination?"
+
+  utter_ask_travel_dates:
+    - text: "What are your travel dates or trip duration?"
+
+  utter_ask_budget:
+    - text: "What is your approximate budget for the trip?"
+
+  utter_ask_sustainability_preference:
+    - text: "How important is sustainability for this trip?"
+      buttons:
+        - title: "Low"
+          payload: '/provide_sustainability_preference{{"sustainability_preference":"low"}}'
+        - title: "Medium"
+          payload: '/provide_sustainability_preference{{"sustainability_preference":"medium"}}'
+        - title: "High"
+          payload: '/provide_sustainability_preference{{"sustainability_preference":"high"}}'
+
+  utter_ask_transport_preference:
+    - text: "Do you have a preferred transport mode?"
+      buttons:
+        - title: "Train"
+          payload: '/provide_transport_preference{{"transport_preference":"train"}}'
+        - title: "Bus"
+          payload: '/provide_transport_preference{{"transport_preference":"bus"}}'
+        - title: "Flight"
+          payload: '/provide_transport_preference{{"transport_preference":"flight"}}'
+        - title: "No preference"
+          payload: '/provide_transport_preference{{"transport_preference":"no preference"}}'
+
+  utter_missing_slot:
+    - text: "I still need one detail before I can recommend options."
+
+  utter_recommendation_intro:
+    - text: "Thanks. I will now compare sustainable transport, accommodation and activity options."
+
+  utter_carbon_offset_intro:
+    - text: "I can suggest offset information, but I will avoid claiming that offsets make a trip fully carbon-neutral unless there is clear evidence."
+
+  utter_trip_summary_intro:
+    - text: "Here is the final trip summary based on the details collected so far."
+
+  utter_change_preferences:
+    - text: "Sure. Tell me which preference you want to change, such as budget, destination, sustainability level or transport mode."
+
+  utter_privacy_notice:
+    - text: "For human handover, I will only share the trip details and selected options after your confirmation."
+
+  utter_handover_offer:
+    - text: "This request may need a human travel advisor. Would you like me to prepare a handover summary?"
+      buttons:
+        - title: "Yes, hand over"
+          payload: "/affirm"
+        - title: "No, continue with bot"
+          payload: "/deny"
+
+  utter_out_of_scope:
+    - text: "I can help with eco-travel planning, carbon impact, hotels, activities, offsets and human advisor handover."
+
+  utter_default:
+    - text: "I am not fully sure I understood. Are you asking about trip planning, carbon impact, hotels, activities or human help?"
+      buttons:
+        - title: "Plan a trip"
+          payload: "/start_trip_planning"
+        - title: "Carbon impact"
+          payload: "/ask_carbon_impact"
+        - title: "Human help"
+          payload: "/request_human_handover"
+
+  utter_goodbye:
+    - text: "Goodbye! I hope your next trip is enjoyable and environmentally responsible."
+
+actions:
+  - action_extract_trip_details
+  - action_ask_missing_slot
+  - action_recommend_transport
+  - action_recommend_hotels
+  - action_recommend_activities
+  - action_calculate_carbon_impact
+  - action_rank_options
+  - action_carbon_offset_info
+  - action_trip_summary
+  - action_prepare_handover
+  - action_default_fallback
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

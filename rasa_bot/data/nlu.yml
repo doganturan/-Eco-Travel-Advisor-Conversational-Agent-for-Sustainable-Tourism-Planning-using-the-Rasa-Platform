@@ -1,0 +1,321 @@
+version: "3.1"
+
+nlu:
+  - intent: greet
+    examples: |
+      - hello
+      - hi
+      - hey
+      - good morning
+      - good afternoon
+      - hi there
+      - hello eco advisor
+      - hey bot
+      - can you help me
+      - I need help planning a trip
+
+  - intent: goodbye
+    examples: |
+      - bye
+      - goodbye
+      - see you
+      - thanks bye
+      - that is all
+      - end the conversation
+      - no more questions
+      - talk later
+      - I am done
+      - finish
+
+  - intent: start_trip_planning
+    examples: |
+      - I want to plan a trip
+      - help me plan an eco trip
+      - I need a sustainable travel plan
+      - plan a low carbon holiday for me
+      - can you create an eco friendly itinerary
+      - I want travel recommendations
+      - help me choose a sustainable destination plan
+      - I need help with transport and hotels
+      - can you plan my city break
+      - start trip planning
+      - I want to organise a greener trip
+      - build me an eco travel plan
+
+  - intent: provide_origin
+    examples: |
+      - I am travelling from [Berlin](origin)
+      - from [Berlin](origin)
+      - my origin is [Berlin](origin)
+      - I will start in [Berlin](origin)
+      - leaving from [Berlin](origin)
+      - departure city is [Berlin](origin)
+      - I live in [Berlin](origin)
+      - start point is [Munich](origin)
+      - I am going from [Copenhagen](origin)
+      - my trip begins in [Amsterdam](origin)
+      - [Berlin](origin) is my starting point
+      - I start from [Hamburg](origin)
+
+  - intent: provide_destination
+    examples: |
+      - I want to go to [Amsterdam](destination)
+      - destination is [Amsterdam](destination)
+      - to [Amsterdam](destination)
+      - my destination is [Copenhagen](destination)
+      - I am visiting [Munich](destination)
+      - I want to travel to [Amsterdam](destination)
+      - the trip is to [Copenhagen](destination)
+      - please recommend options for [Munich](destination)
+      - I am planning to visit [Amsterdam](destination)
+      - I would like to go to [Copenhagen](destination)
+      - final city is [Munich](destination)
+      - [Amsterdam](destination) is my destination
+
+  - intent: provide_dates
+    examples: |
+      - I travel on [next weekend](travel_date)
+      - dates are [12 July to 15 July](travel_date)
+      - I will go for [three days](travel_date)
+      - the trip is [in August](travel_date)
+      - I want to travel [tomorrow](travel_date)
+      - I need a [two day](travel_date) city break
+      - [5 nights](travel_date)
+      - from [20 June to 24 June](travel_date)
+      - it will be [this weekend](travel_date)
+      - I am travelling [next month](travel_date)
+      - duration is [4 days](travel_date)
+      - I plan to stay [one week](travel_date)
+
+  - intent: provide_budget
+    examples: |
+      - my budget is [300 euros](budget)
+      - around [500 EUR](budget)
+      - I can spend [250 euros](budget)
+      - budget is [400](budget)
+      - I have about [700 euros](budget)
+      - maximum [350 euros](budget)
+      - keep it under [600 EUR](budget)
+      - I want a cheap option around [200 euros](budget)
+      - my total budget is [450 euros](budget)
+      - I can pay up to [800 euros](budget)
+      - approximately [550](budget)
+      - not more than [300 EUR](budget)
+
+  - intent: provide_sustainability_preference
+    examples: |
+      - sustainability is [high](sustainability_preference)
+      - I want a [very sustainable](sustainability_preference) trip
+      - make it [eco](sustainability_preference)
+      - [medium](sustainability_preference) sustainability is fine
+      - I prefer [low](sustainability_preference) sustainability focus
+      - the environment is very important
+      - I want the lowest carbon option
+      - I care more about sustainability than price
+      - balance price and sustainability
+      - I only need a basic sustainable option
+      - choose the greenest option
+      - prioritise carbon reduction
+      - [high](sustainability_preference)
+      - [medium](sustainability_preference)
+      - [low](sustainability_preference)
+
+  - intent: provide_transport_preference
+    examples: |
+      - I prefer [train](transport_preference)
+      - choose [bus](transport_preference)
+      - I want to fly by [flight](transport_preference)
+      - [train](transport_preference) is best for me
+      - [bus](transport_preference) is okay
+      - I have [no preference](transport_preference)
+      - any transport is fine
+      - I prefer public transport
+      - avoid flights if possible
+      - compare train and bus
+      - I want the cheapest transport
+      - I want the fastest transport
+      - use [train](transport_preference)
+      - book around [flight](transport_preference)
+
+  - intent: ask_recommendations
+    examples: |
+      - show me recommendations
+      - recommend options
+      - what do you suggest
+      - give me the best options
+      - find sustainable options
+      - show transport and hotel suggestions
+      - recommend hotels and activities
+      - what is the best eco travel plan
+      - compare my options
+      - show the ranked options
+      - provide the travel cards
+      - can I see the results
+
+  - intent: ask_carbon_impact
+    examples: |
+      - what is the carbon impact
+      - calculate the carbon footprint
+      - how much CO2 does this trip produce
+      - show emissions
+      - compare carbon emissions
+      - is the train lower carbon than flying
+      - what is the estimated CO2
+      - carbon calculation please
+      - how green is this trip
+      - show me the carbon score
+      - explain the emission label
+      - is this a high emission option
+
+  - intent: ask_carbon_offset
+    examples: |
+      - show carbon offset options
+      - can I offset the trip
+      - suggest offset information
+      - how can I compensate emissions
+      - recommend carbon offset programmes
+      - give me offset info
+      - what offset project can I use
+      - can this be carbon neutral
+      - offset my flight
+      - show cautious offset advice
+      - tell me about carbon compensation
+      - I want to reduce the remaining emissions
+
+  - intent: ask_trip_summary
+    examples: |
+      - give me the final summary
+      - trip summary please
+      - summarize my trip
+      - show final travel plan
+      - provide the final itinerary
+      - what is my selected plan
+      - summarize the recommendations
+      - show my eco travel summary
+      - final answer please
+      - prepare the trip summary
+      - give me a short summary
+      - can you recap the plan
+
+  - intent: request_human_handover
+    examples: |
+      - I want to talk to a human
+      - connect me with a travel advisor
+      - human help please
+      - I need a real advisor
+      - can a human continue this
+      - escalate this conversation
+      - I want personal consultation
+      - hand me over to an agent
+      - this is too complex
+      - I need expert help
+      - human advisor
+      - please transfer me
+
+  - intent: change_preferences
+    examples: |
+      - I want to change my preferences
+      - change the budget
+      - update my destination
+      - I changed my mind
+      - use a different transport mode
+      - make it cheaper
+      - make it more sustainable
+      - change to train
+      - I want another hotel
+      - can we rerank the options
+      - update my sustainability level
+      - change my travel dates
+
+  - intent: affirm
+    examples: |
+      - yes
+      - sure
+      - correct
+      - that is right
+      - I agree
+      - please do
+      - yes please
+      - okay
+      - sounds good
+      - confirm
+      - go ahead
+      - exactly
+
+  - intent: deny
+    examples: |
+      - no
+      - not now
+      - I don't want that
+      - no thanks
+      - cancel
+      - stop
+      - I disagree
+      - not correct
+      - do not do that
+      - continue with the bot
+      - skip it
+      - maybe later
+
+  - intent: out_of_scope
+    examples: |
+      - what is the weather today
+      - tell me a joke
+      - order pizza
+      - write my essay
+      - what is your favourite movie
+      - play music
+      - book a doctor appointment
+      - help me with banking
+      - who won the football match
+      - translate this sentence
+      - I want investment advice
+      - generate an image
+
+  - synonym: train
+    examples: |
+      - rail
+      - railway
+      - intercity rail
+      - public train
+
+  - synonym: bus
+    examples: |
+      - coach
+      - long distance bus
+      - public bus
+
+  - synonym: flight
+    examples: |
+      - plane
+      - airplane
+      - fly
+      - flying
+
+  - synonym: high
+    examples: |
+      - very sustainable
+      - eco
+      - greenest
+      - lowest carbon
+      - maximum sustainability
+
+  - lookup: origin
+    examples: |
+      - Berlin
+      - Amsterdam
+      - Copenhagen
+      - Munich
+      - Hamburg
+      - Paris
+      - Vienna
+
+  - lookup: destination
+    examples: |
+      - Berlin
+      - Amsterdam
+      - Copenhagen
+      - Munich
+      - Hamburg
+      - Paris
+      - Vienna
