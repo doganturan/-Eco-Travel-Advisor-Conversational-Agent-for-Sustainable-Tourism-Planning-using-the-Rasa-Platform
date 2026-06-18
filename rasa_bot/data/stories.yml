@@ -130,6 +130,7 @@ stories:
     steps:
       - intent: request_human_handover
       - action: utter_handover_offer
+      - intent: affirm
       - action: action_prepare_handover
 
   - story: fallback then valid answer
@@ -145,6 +146,7 @@ stories:
       - action: action_default_fallback
       - intent: request_human_handover
       - action: utter_handover_offer
+      - intent: affirm
       - action: action_prepare_handover
 
   - story: out of scope then return to main flow

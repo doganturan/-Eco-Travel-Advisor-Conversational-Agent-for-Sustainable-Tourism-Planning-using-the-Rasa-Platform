@@ -60,7 +60,16 @@ rules:
     steps:
       - intent: request_human_handover
       - action: utter_handover_offer
+
+  - rule: User confirms human advisor handover
+    steps:
+      - intent: affirm
       - action: action_prepare_handover
+
+  - rule: User declines human advisor handover
+    steps:
+      - intent: deny
+      - action: utter_out_of_scope
 
   - rule: User wants to change preferences
     steps:
