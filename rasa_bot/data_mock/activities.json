@@ -1,0 +1,79 @@
+[
+  {
+    "destination": "Amsterdam",
+    "name": "Guided Cycling Heritage Tour",
+    "category": "local culture",
+    "price_eur": 28,
+    "estimated_co2_kg": 1,
+    "sustainability_label": "low",
+    "community_benefit": "local guide income",
+    "duration_hours": 2.5,
+    "description": "A small-group cycling route through historic neighbourhoods with a local guide."
+  },
+  {
+    "destination": "Amsterdam",
+    "name": "Canal District Walking Route",
+    "category": "walking tour",
+    "price_eur": 15,
+    "estimated_co2_kg": 0.5,
+    "sustainability_label": "low",
+    "community_benefit": "supports local cultural interpretation",
+    "duration_hours": 2.0,
+    "description": "Low-impact walking tour focused on architecture, history and responsible visitor behaviour."
+  },
+  {
+    "destination": "Amsterdam",
+    "name": "Plant-Based Local Food Workshop",
+    "category": "food experience",
+    "price_eur": 42,
+    "estimated_co2_kg": 3,
+    "sustainability_label": "low",
+    "community_benefit": "local small business support",
+    "duration_hours": 3.0,
+    "description": "Hands-on workshop using seasonal ingredients from local suppliers."
+  },
+  {
+    "destination": "Copenhagen",
+    "name": "Harbour Clean Walk and Culture Tour",
+    "category": "community activity",
+    "price_eur": 10,
+    "estimated_co2_kg": 0.5,
+    "sustainability_label": "low",
+    "community_benefit": "supports local environmental volunteers",
+    "duration_hours": 2.0,
+    "description": "Combines a short harbour clean-up with local cultural storytelling."
+  },
+  {
+    "destination": "Copenhagen",
+    "name": "Bike Architecture Route",
+    "category": "cycling tour",
+    "price_eur": 35,
+    "estimated_co2_kg": 1,
+    "sustainability_label": "low",
+    "community_benefit": "local guide income",
+    "duration_hours": 3.0,
+    "description": "Explores sustainable urban design and cycling culture by bike."
+  },
+  {
+    "destination": "Munich",
+    "name": "Isar River Responsible Walking Tour",
+    "category": "nature and culture",
+    "price_eur": 18,
+    "estimated_co2_kg": 0.8,
+    "sustainability_label": "low",
+    "community_benefit": "local guide income",
+    "duration_hours": 2.0,
+    "description": "A low-impact walking tour around the Isar river area with responsible tourism guidance."
+  },
+  {
+    "destination": "Munich",
+    "name": "Local Market and Seasonal Food Visit",
+    "category": "food experience",
+    "price_eur": 30,
+    "estimated_co2_kg": 2.5,
+    "sustainability_label": "low",
+    "community_benefit": "supports local producers",
+    "duration_hours": 2.5,
+    "description": "Visit local market stalls and learn about seasonal food choices."
+  }
+]

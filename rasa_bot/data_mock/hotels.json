@@ -1,0 +1,119 @@
+[
+  {
+    "destination": "Amsterdam",
+    "name": "Eco Canal Hotel",
+    "eco_certification": "Green Key",
+    "price_per_night_eur": 118,
+    "rating": 4.5,
+    "distance_to_public_transport_km": 0.3,
+    "estimated_co2_kg_per_night": 9,
+    "sustainability_label": "low",
+    "features": [
+      "renewable electricity",
+      "water-saving fixtures",
+      "bike rental",
+      "local breakfast"
+    ],
+    "why_recommended": "Good public transport access and clear eco-certification make it suitable for low-carbon city breaks."
+  },
+  {
+    "destination": "Amsterdam",
+    "name": "North Dock Sustainable Stay",
+    "eco_certification": "EU Ecolabel",
+    "price_per_night_eur": 95,
+    "rating": 4.2,
+    "distance_to_public_transport_km": 0.6,
+    "estimated_co2_kg_per_night": 11,
+    "sustainability_label": "low",
+    "features": [
+      "energy-efficient heating",
+      "waste sorting",
+      "refill water station",
+      "plant-forward menu"
+    ],
+    "why_recommended": "Affordable eco-labelled accommodation with practical low-waste features."
+  },
+  {
+    "destination": "Amsterdam",
+    "name": "Central Comfort Hotel",
+    "eco_certification": "Not verified",
+    "price_per_night_eur": 82,
+    "rating": 4.0,
+    "distance_to_public_transport_km": 0.2,
+    "estimated_co2_kg_per_night": 18,
+    "sustainability_label": "moderate",
+    "features": [
+      "central location",
+      "public transport nearby"
+    ],
+    "why_recommended": "Lower price, but sustainability evidence is limited. The bot should present this transparently."
+  },
+  {
+    "destination": "Copenhagen",
+    "name": "Harbour Green Hotel",
+    "eco_certification": "Green Key",
+    "price_per_night_eur": 130,
+    "rating": 4.6,
+    "distance_to_public_transport_km": 0.4,
+    "estimated_co2_kg_per_night": 8,
+    "sustainability_label": "low",
+    "features": [
+      "renewable electricity",
+      "bike-friendly",
+      "organic breakfast",
+      "low-waste housekeeping"
+    ],
+    "why_recommended": "Strong sustainability profile and good access to cycling infrastructure."
+  },
+  {
+    "destination": "Copenhagen",
+    "name": "Nordic Budget Eco Hostel",
+    "eco_certification": "Local sustainability pledge",
+    "price_per_night_eur": 54,
+    "rating": 4.1,
+    "distance_to_public_transport_km": 0.5,
+    "estimated_co2_kg_per_night": 7,
+    "sustainability_label": "low",
+    "features": [
+      "shared rooms",
+      "recycling station",
+      "community kitchen",
+      "bike storage"
+    ],
+    "why_recommended": "Best option for budget travellers who still want a low-carbon stay."
+  },
+  {
+    "destination": "Munich",
+    "name": "Munich Green City Hotel",
+    "eco_certification": "EU Ecolabel",
+    "price_per_night_eur": 105,
+    "rating": 4.4,
+    "distance_to_public_transport_km": 0.2,
+    "estimated_co2_kg_per_night": 10,
+    "sustainability_label": "low",
+    "features": [
+      "certified energy management",
+      "public transport pass option",
+      "local suppliers",
+      "water-saving laundry"
+    ],
+    "why_recommended": "Certified hotel close to public transport, suitable for car-free itineraries."
+  },
+  {
+    "destination": "Munich",
+    "name": "Isar Community Guesthouse",
+    "eco_certification": "Community-based tourism partner",
+    "price_per_night_eur": 76,
+    "rating": 4.0,
+    "distance_to_public_transport_km": 0.7,
+    "estimated_co2_kg_per_night": 13,
+    "sustainability_label": "moderate",
+    "features": [
+      "local ownership",
+      "community tours",
+      "vegetarian breakfast",
+      "waste reduction"
+    ],
+    "why_recommended": "Supports local community tourism, though formal eco-certification is limited."
+  }
+]

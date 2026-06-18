@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Certified Reforestation Contribution",
+    "project_type": "nature-based",
+    "cost_per_tonne_eur": 18,
+    "verification_level": "third-party verified",
+    "suitable_for": [
+      "flight",
+      "train",
+      "bus"
+    ],
+    "caution_note": "Presented as a secondary option only; emission reduction should be prioritised before offsetting."
+  },
+  {
+    "name": "Renewable Energy Community Fund",
+    "project_type": "renewable energy",
+    "cost_per_tonne_eur": 22,
+    "verification_level": "documented impact report",
+    "suitable_for": [
+      "flight",
+      "hotel",
+      "activity"
+    ],
+    "caution_note": "The bot should avoid claiming that the trip becomes fully carbon-neutral without clear evidence."
+  },
+  {
+    "name": "Urban Mobility Improvement Donation",
+    "project_type": "local transport",
+    "cost_per_tonne_eur": 15,
+    "verification_level": "local programme reporting",
+    "suitable_for": [
+      "city-break",
+      "train",
+      "bus"
+    ],
+    "caution_note": "Useful for communicating positive local support, but not a direct cancellation of emissions."
+  }
+]
