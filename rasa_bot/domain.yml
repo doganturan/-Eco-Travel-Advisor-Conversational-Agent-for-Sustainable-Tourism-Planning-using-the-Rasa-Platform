@@ -89,6 +89,18 @@ slots:
     mappings:
       - type: custom
 
+  selected_transport_co2_kg:
+    type: float
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  selected_transport_source:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
   selected_hotel:
     type: text
     influence_conversation: false

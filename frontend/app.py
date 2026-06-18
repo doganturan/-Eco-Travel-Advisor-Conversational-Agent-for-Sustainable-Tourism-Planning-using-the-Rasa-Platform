@@ -2,6 +2,15 @@ import os
 import requests
 import streamlit as st
 
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    load_dotenv = None
+
+
+if load_dotenv:
+    load_dotenv()
+
 
 RASA_API_URL = os.getenv(
     "RASA_API_URL",
@@ -171,6 +180,8 @@ def process_user_input(text):
 
 def render_transport_card(data):
     card_class = get_card_class(data.get("carbon_label"))
+    notes = data.get("notes")
+    source = data.get("data_source") or data.get("carbon_source")
 
     st.markdown(
         f"""
@@ -183,6 +194,8 @@ def render_transport_card(data):
                 <strong>Price:</strong> €{data.get("price_eur", "-")}<br>
                 <strong>Duration:</strong> {data.get("duration_hours", "-")} hours<br>
                 <strong>Score:</strong> {data.get("score", "-")}/100<br>
+                <strong>Source:</strong> {source or "-"}<br>
+                <strong>Notes:</strong> {notes or "-"}<br>
                 <span class="small-label">Label: {data.get("carbon_label", "neutral")}</span>
             </div>
         </div>
@@ -470,8 +483,8 @@ with st.sidebar:
 
     st.markdown("---")
     st.markdown(
-        "This prototype uses approximate carbon values and mock datasets. "
-        "Sustainability claims should be presented transparently."
+        "This prototype uses live API data when keys are available, "
+        "with local fallback estimates when external services are unavailable."
     )
 
 
