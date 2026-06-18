@@ -1,26 +1,44 @@
 {
+  "action_calculate_carbon_impact": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 1
+  },
+  "action_carbon_offset_info": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 1
+  },
+  "action_trip_summary": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 1
+  },
+  "utter_ask_origin": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 1
+  },
   "utter_ask_budget": {
     "precision": 0.0,
     "recall": 0.0,
     "f1-score": 0.0,
     "support": 1
   },
-  "utter_ask_sustainability_preference": {
+  "action_recommend_hotels": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 1
+  },
+  "utter_ask_travel_dates": {
     "precision": 0.0,
     "recall": 0.0,
     "f1-score": 0.0,
-    "support": 1
-  },
-  "utter_carbon_offset_intro": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 1
-  },
-  "action_recommend_transport": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
     "support": 1
   },
   "utter_handover_offer": {
@@ -41,31 +59,7 @@
     "f1-score": 1.0,
     "support": 1
   },
-  "utter_explain_purpose": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 2
-  },
-  "action_rank_options": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 1
-  },
-  "action_default_fallback": {
-    "precision": 0.1111111111111111,
-    "recall": 1.0,
-    "f1-score": 0.19999999999999998,
-    "support": 1
-  },
-  "action_calculate_carbon_impact": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 1
-  },
-  "utter_ask_origin": {
+  "action_recommend_transport": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
@@ -77,7 +71,37 @@
     "f1-score": 1.0,
     "support": 2
   },
-  "action_prepare_handover": {
+  "action_default_fallback": {
+    "precision": 0.1111111111111111,
+    "recall": 1.0,
+    "f1-score": 0.19999999999999998,
+    "support": 1
+  },
+  "utter_explain_purpose": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 2
+  },
+  "action_recommend_activities": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 1
+  },
+  "utter_ask_sustainability_preference": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 1
+  },
+  "utter_recommendation_intro": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 1
+  },
+  "utter_carbon_offset_intro": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
@@ -89,43 +113,19 @@
     "f1-score": 0.8181818181818181,
     "support": 13
   },
-  "utter_ask_travel_dates": {
-    "precision": 0.0,
-    "recall": 0.0,
-    "f1-score": 0.0,
-    "support": 1
-  },
-  "action_recommend_hotels": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 1
-  },
-  "action_carbon_offset_info": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 1
-  },
   "utter_ask_destination": {
     "precision": 0.0,
     "recall": 0.0,
     "f1-score": 0.0,
     "support": 1
   },
-  "action_recommend_activities": {
+  "action_rank_options": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
     "support": 1
   },
-  "action_trip_summary": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 1
-  },
-  "utter_recommendation_intro": {
+  "action_prepare_handover": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
@@ -135,13 +135,13 @@
   "macro avg": {
     "precision": 0.7777777777777778,
     "recall": 0.8041958041958043,
-    "f1-score": 0.7735537190082645,
+    "f1-score": 0.7735537190082643,
     "support": 37
   },
   "weighted avg": {
     "precision": 0.867867867867868,
     "recall": 0.7837837837837838,
-    "f1-score": 0.8063882063882063,
+    "f1-score": 0.8063882063882064,
     "support": 37
   },
   "micro avg": {

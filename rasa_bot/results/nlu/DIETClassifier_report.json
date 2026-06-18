@@ -1,16 +1,9 @@
 {
-  "travel_date": {
+  "budget": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
     "support": 6,
-    "confused_with": {}
-  },
-  "destination": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 3,
     "confused_with": {}
   },
   "sustainability_preference": {
@@ -20,7 +13,21 @@
     "support": 2,
     "confused_with": {}
   },
+  "travel_date": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 6,
+    "confused_with": {}
+  },
   "origin": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 3,
+    "confused_with": {}
+  },
+  "destination": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
@@ -32,13 +39,6 @@
     "recall": 1.0,
     "f1-score": 1.0,
     "support": 4,
-    "confused_with": {}
-  },
-  "budget": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 6,
     "confused_with": {}
   },
   "micro avg": {
