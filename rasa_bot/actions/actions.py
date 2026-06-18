@@ -779,24 +779,34 @@ class ActionAskMissingSlot(Action):
         domain: Dict[Text, Any]
     ) -> List[Dict[Text, Any]]:
 
-        required_slots = [
-            ("origin", "Where are you travelling from?"),
-            ("destination", "What is your destination?"),
-            ("travel_dates", "What are your travel dates or trip duration?"),
-            ("budget", "What is your approximate budget for the trip?"),
-            ("sustainability_preference", "How important is sustainability for this trip? Low, medium or high?"),
-            ("transport_preference", "Do you prefer train, bus, flight, or no preference?")
-        ]
+        if not tracker.get_slot("origin"):
+            dispatcher.utter_message(response="utter_ask_origin")
+            return [SlotSet("fallback_count", 0)]
 
-        for slot_name, question in required_slots:
-            if not tracker.get_slot(slot_name):
-                dispatcher.utter_message(text=question)
-                return []
+        if not tracker.get_slot("destination"):
+            dispatcher.utter_message(response="utter_ask_destination")
+            return [SlotSet("fallback_count", 0)]
+
+        if not tracker.get_slot("travel_dates"):
+            dispatcher.utter_message(response="utter_ask_travel_dates")
+            return [SlotSet("fallback_count", 0)]
+
+        if not tracker.get_slot("budget"):
+            dispatcher.utter_message(response="utter_ask_budget")
+            return [SlotSet("fallback_count", 0)]
+
+        if not tracker.get_slot("sustainability_preference"):
+            dispatcher.utter_message(response="utter_ask_sustainability_preference")
+            return [SlotSet("fallback_count", 0)]
+
+        if not tracker.get_slot("transport_preference"):
+            dispatcher.utter_message(response="utter_ask_transport_preference")
+            return [SlotSet("fallback_count", 0)]
 
         dispatcher.utter_message(
-            text="Great, I have the key trip details. Ask me to show recommendations when you are ready."
+            text="Great, I have the key trip details. I will now compare sustainable options."
         )
-        return []
+        return [SlotSet("fallback_count", 0)]
 
 
 class ActionRecommendTransport(Action):

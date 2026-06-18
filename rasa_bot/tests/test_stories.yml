@@ -24,35 +24,35 @@ stories:
           - origin: Berlin
       - slot_was_set:
           - origin: Berlin
-      - action: utter_ask_destination
+      - action: action_ask_missing_slot
 
       - intent: provide_destination
         entities:
           - destination: Amsterdam
       - slot_was_set:
           - destination: Amsterdam
-      - action: utter_ask_travel_dates
+      - action: action_ask_missing_slot
 
       - intent: provide_dates
         entities:
           - travel_date: next weekend
       - slot_was_set:
           - travel_dates: next weekend
-      - action: utter_ask_budget
+      - action: action_ask_missing_slot
 
       - intent: provide_budget
         entities:
           - budget: 300 euros
       - slot_was_set:
           - budget: 300 euros
-      - action: utter_ask_sustainability_preference
+      - action: action_ask_missing_slot
 
       - intent: provide_sustainability_preference
         entities:
           - sustainability_preference: high
       - slot_was_set:
           - sustainability_preference: high
-      - action: utter_ask_transport_preference
+      - action: action_ask_missing_slot
 
       - intent: provide_transport_preference
         entities:
@@ -104,3 +104,16 @@ stories:
     steps:
       - intent: out_of_scope
       - action: action_default_fallback
+
+  - story: test repeated start then valid origin
+    steps:
+      - intent: start_trip_planning
+      - action: utter_ask_origin
+      - intent: start_trip_planning
+      - action: utter_ask_origin
+      - intent: provide_origin
+        entities:
+          - origin: Berlin
+      - slot_was_set:
+          - origin: Berlin
+      - action: action_ask_missing_slot

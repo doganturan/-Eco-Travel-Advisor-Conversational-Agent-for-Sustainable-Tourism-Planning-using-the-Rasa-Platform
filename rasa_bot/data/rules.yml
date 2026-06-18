@@ -76,3 +76,38 @@ rules:
       - intent: change_preferences
       - action: utter_change_preferences
       - action: action_ask_missing_slot
+
+  - rule: Continue after origin is provided
+    steps:
+      - intent: provide_origin
+      - action: action_ask_missing_slot
+
+  - rule: Continue after destination is provided
+    steps:
+      - intent: provide_destination
+      - action: action_ask_missing_slot
+
+  - rule: Continue after travel dates are provided
+    steps:
+      - intent: provide_dates
+      - action: action_ask_missing_slot
+
+  - rule: Continue after budget is provided
+    steps:
+      - intent: provide_budget
+      - action: action_ask_missing_slot
+
+  - rule: Continue after sustainability preference is provided
+    steps:
+      - intent: provide_sustainability_preference
+      - action: action_ask_missing_slot
+
+  - rule: Start recommendations after transport preference is provided
+    steps:
+      - intent: provide_transport_preference
+      - action: utter_recommendation_intro
+      - action: action_recommend_transport
+      - action: action_calculate_carbon_impact
+      - action: action_rank_options
+      - action: action_recommend_hotels
+      - action: action_recommend_activities

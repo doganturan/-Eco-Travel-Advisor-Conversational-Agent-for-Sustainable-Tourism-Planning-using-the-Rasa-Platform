@@ -45,10 +45,16 @@ nlu:
   - intent: provide_origin
     examples: |
       - I am travelling from [Berlin](origin)
+      - I am traveling from [Berlin](origin)
+      - I am travelling from [berlin](origin)
       - from [Berlin](origin)
+      - from [berlin](origin)
+      - [Berlin](origin)
+      - [berlin](origin)
       - my origin is [Berlin](origin)
-      - I will start in [Berlin](origin)
+      - starting from [Berlin](origin)
       - leaving from [Berlin](origin)
+      - I will start in [Berlin](origin)
       - departure city is [Berlin](origin)
       - I live in [Berlin](origin)
       - start point is [Munich](origin)
@@ -62,6 +68,8 @@ nlu:
       - I want to go to [Amsterdam](destination)
       - destination is [Amsterdam](destination)
       - to [Amsterdam](destination)
+      - [Amsterdam](destination)
+      - [amsterdam](destination)
       - my destination is [Copenhagen](destination)
       - I am visiting [Munich](destination)
       - I want to travel to [Amsterdam](destination)
@@ -90,6 +98,10 @@ nlu:
   - intent: provide_budget
     examples: |
       - my budget is [300 euros](budget)
+      - [300 euro](budget)
+      - [300 euros](budget)
+      - around [300 euro](budget)
+      - budget is [300 euro](budget)
       - around [500 EUR](budget)
       - I can spend [250 euros](budget)
       - budget is [400](budget)
@@ -117,8 +129,13 @@ nlu:
       - choose the greenest option
       - prioritise carbon reduction
       - [high](sustainability_preference)
+      - [High](sustainability_preference)
       - [medium](sustainability_preference)
+      - [Medium](sustainability_preference)
       - [low](sustainability_preference)
+      - [Low](sustainability_preference)
+      - sustainability is [medium](sustainability_preference)
+      - sustainability is [low](sustainability_preference)
 
   - intent: provide_transport_preference
     examples: |
@@ -127,6 +144,14 @@ nlu:
       - I want to fly by [flight](transport_preference)
       - [train](transport_preference) is best for me
       - [bus](transport_preference) is okay
+      - [bus](transport_preference)
+      - [Bus](transport_preference)
+      - [train](transport_preference)
+      - [Train](transport_preference)
+      - [flight](transport_preference)
+      - [Flight](transport_preference)
+      - I prefer [bus](transport_preference)
+      - I prefer [train](transport_preference)
       - I have [no preference](transport_preference)
       - any transport is fine
       - I prefer public transport
