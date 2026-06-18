@@ -117,3 +117,21 @@ stories:
       - slot_was_set:
           - origin: Berlin
       - action: action_ask_missing_slot
+
+  - story: test change_preferences flow
+    steps:
+      - intent: change_preferences
+      - action: utter_change_preferences
+      - action: utter_choose_detail_to_change
+      - intent: change_origin
+      - action: action_handle_change_request
+
+  - story: test change_budget flow
+    steps:
+      - intent: change_budget
+      - action: action_handle_change_request
+
+  - story: test reset_trip flow
+    steps:
+      - intent: reset_trip
+      - action: action_reset_trip

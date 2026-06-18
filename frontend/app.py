@@ -1,6 +1,7 @@
 import os
 import requests
 import streamlit as st
+import uuid
 
 try:
     from dotenv import load_dotenv
@@ -454,7 +455,7 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 
 if "sender_id" not in st.session_state:
-    st.session_state.sender_id = "streamlit_user"
+    st.session_state.sender_id = f"streamlit_user_{uuid.uuid4().hex}"
 
 if "handover_active" not in st.session_state:
     st.session_state.handover_active = False
@@ -481,7 +482,72 @@ with st.sidebar:
     if st.button("Reset conversation"):
         st.session_state.messages = []
         st.session_state.handover_active = False
+        st.session_state.sender_id = f"streamlit_user_{uuid.uuid4().hex}"
         st.rerun()
+
+    st.markdown("---")
+    st.subheader("Guided demo controls")
+
+    if st.button("Start eco trip", use_container_width=True):
+        process_user_input("/start_trip_planning")
+        st.rerun()
+
+    # Origin selection
+    origin_opt = st.selectbox("Origin", ["Berlin", "Munich", "Hamburg", "Amsterdam"])
+    if st.button("Use selected origin", use_container_width=True):
+        process_user_input(f'/provide_origin{{"origin":"{origin_opt}"}}')
+        st.rerun()
+
+    # Destination selection
+    dest_opt = st.selectbox("Destination", ["Amsterdam", "Copenhagen", "Munich", "Paris"])
+    if st.button("Use selected destination", use_container_width=True):
+        process_user_input(f'/provide_destination{{"destination":"{dest_opt}"}}')
+        st.rerun()
+
+    # Date selection
+    import datetime
+    today = datetime.date.today()
+    dates = st.date_input("Travel dates", value=(today, today + datetime.timedelta(days=3)))
+    if st.button("Use selected dates", use_container_width=True):
+        if isinstance(dates, (tuple, list)):
+            if len(dates) == 2:
+                dates_str = f"{dates[0]} to {dates[1]}"
+            elif len(dates) == 1:
+                dates_str = f"{dates[0]} to {dates[0]}"
+            else:
+                dates_str = ""
+        else:
+            dates_str = str(dates)
+        process_user_input(f'/provide_dates{{"travel_date":"{dates_str}"}}')
+        st.rerun()
+
+    # Budget selection
+    budget_opt = st.selectbox("Budget (€)", [200, 300, 500, 800])
+    if st.button("Use selected budget", use_container_width=True):
+        process_user_input(f'/provide_budget{{"budget":"{budget_opt} euro"}}')
+        st.rerun()
+
+    # Sustainability preference
+    sust_opt = st.selectbox("Sustainability focus", ["low", "medium", "high"])
+    if st.button("Use sustainability", use_container_width=True):
+        process_user_input(f'/provide_sustainability_preference{{"sustainability_preference":"{sust_opt}"}}')
+        st.rerun()
+
+    # Transport preference
+    trans_opt = st.selectbox("Transport", ["train", "bus", "flight", "no preference"])
+    if st.button("Use transport", use_container_width=True):
+        process_user_input(f'/provide_transport_preference{{"transport_preference":"{trans_opt}"}}')
+        st.rerun()
+
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Show recommendations", use_container_width=True):
+            process_user_input("/ask_recommendations")
+            st.rerun()
+    with col2:
+        if st.button("Change details", use_container_width=True):
+            process_user_input("/change_preferences")
+            st.rerun()
 
     st.markdown("---")
     st.markdown(

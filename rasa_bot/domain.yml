@@ -16,6 +16,13 @@ intents:
   - ask_trip_summary
   - request_human_handover
   - change_preferences
+  - change_origin
+  - change_destination
+  - change_dates
+  - change_budget
+  - change_sustainability
+  - change_transport
+  - reset_trip
   - affirm
   - deny
   - out_of_scope
@@ -136,15 +143,51 @@ responses:
 
   utter_ask_origin:
     - text: "Where are you travelling from?"
+      buttons:
+        - title: "Berlin"
+          payload: '/provide_origin{{"origin":"Berlin"}}'
+        - title: "Munich"
+          payload: '/provide_origin{{"origin":"Munich"}}'
+        - title: "Hamburg"
+          payload: '/provide_origin{{"origin":"Hamburg"}}'
+        - title: "Amsterdam"
+          payload: '/provide_origin{{"origin":"Amsterdam"}}'
 
   utter_ask_destination:
     - text: "What is your destination?"
+      buttons:
+        - title: "Amsterdam"
+          payload: '/provide_destination{{"destination":"Amsterdam"}}'
+        - title: "Copenhagen"
+          payload: '/provide_destination{{"destination":"Copenhagen"}}'
+        - title: "Munich"
+          payload: '/provide_destination{{"destination":"Munich"}}'
+        - title: "Paris"
+          payload: '/provide_destination{{"destination":"Paris"}}'
 
   utter_ask_travel_dates:
     - text: "What are your travel dates or trip duration?"
+      buttons:
+        - title: "Next weekend"
+          payload: '/provide_dates{{"travel_date":"next weekend"}}'
+        - title: "3 days"
+          payload: '/provide_dates{{"travel_date":"3 days"}}'
+        - title: "One week"
+          payload: '/provide_dates{{"travel_date":"one week"}}'
+        - title: "Next month"
+          payload: '/provide_dates{{"travel_date":"next month"}}'
 
   utter_ask_budget:
     - text: "What is your approximate budget for the trip?"
+      buttons:
+        - title: "€200"
+          payload: '/provide_budget{{"budget":"200 euro"}}'
+        - title: "€300"
+          payload: '/provide_budget{{"budget":"300 euro"}}'
+        - title: "€500"
+          payload: '/provide_budget{{"budget":"500 euro"}}'
+        - title: "€800"
+          payload: '/provide_budget{{"budget":"800 euro"}}'
 
   utter_ask_sustainability_preference:
     - text: "How important is sustainability for this trip?"
@@ -180,8 +223,26 @@ responses:
   utter_trip_summary_intro:
     - text: "Here is the final trip summary based on the details collected so far."
 
+  utter_choose_detail_to_change:
+    - text: "Which trip detail would you like to change?"
+      buttons:
+        - title: "Origin"
+          payload: "/change_origin"
+        - title: "Destination"
+          payload: "/change_destination"
+        - title: "Dates"
+          payload: "/change_dates"
+        - title: "Budget"
+          payload: "/change_budget"
+        - title: "Sustainability"
+          payload: "/change_sustainability"
+        - title: "Transport"
+          payload: "/change_transport"
+        - title: "Start over"
+          payload: "/reset_trip"
+
   utter_change_preferences:
-    - text: "Sure. Tell me which preference you want to change, such as budget, destination, sustainability level or transport mode."
+    - text: "No problem. You can update one trip detail instead of restarting the whole conversation."
 
   utter_privacy_notice:
     - text: "For human handover, I will only share the trip details and selected options after your confirmation."
@@ -222,6 +283,8 @@ actions:
   - action_trip_summary
   - action_prepare_handover
   - action_default_fallback
+  - action_handle_change_request
+  - action_reset_trip
 
 session_config:
   session_expiration_time: 60

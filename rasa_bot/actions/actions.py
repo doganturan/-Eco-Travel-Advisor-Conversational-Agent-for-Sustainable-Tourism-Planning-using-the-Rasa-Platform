@@ -804,9 +804,89 @@ class ActionAskMissingSlot(Action):
             return [SlotSet("fallback_count", 0)]
 
         dispatcher.utter_message(
-            text="Great, I have the key trip details. I will now compare sustainable options."
+            text="Great, I have the key trip details. Would you like to show or update the recommendations?",
+            buttons=[
+                {"title": "Show recommendations", "payload": "/ask_recommendations"},
+                {"title": "Change another detail", "payload": "/change_preferences"},
+                {"title": "Start over", "payload": "/reset_trip"}
+            ]
         )
         return [SlotSet("fallback_count", 0)]
+
+
+class ActionHandleChangeRequest(Action):
+    def name(self) -> Text:
+        return "action_handle_change_request"
+
+    def run(self, dispatcher, tracker, domain):
+        intent = tracker.get_intent_of_latest_message()
+
+        events = [
+            SlotSet("fallback_count", 0),
+            SlotSet("selected_transport", None),
+            SlotSet("selected_transport_co2_kg", None),
+            SlotSet("selected_transport_source", None),
+            SlotSet("selected_hotel", None),
+            SlotSet("selected_activity", None),
+        ]
+
+        if intent == "change_origin":
+            events.append(SlotSet("origin", None))
+            dispatcher.utter_message(response="utter_ask_origin")
+            return events
+
+        if intent == "change_destination":
+            events.append(SlotSet("destination", None))
+            dispatcher.utter_message(response="utter_ask_destination")
+            return events
+
+        if intent == "change_dates":
+            events.append(SlotSet("travel_dates", None))
+            dispatcher.utter_message(response="utter_ask_travel_dates")
+            return events
+
+        if intent == "change_budget":
+            events.append(SlotSet("budget", None))
+            dispatcher.utter_message(response="utter_ask_budget")
+            return events
+
+        if intent == "change_sustainability":
+            events.append(SlotSet("sustainability_preference", None))
+            dispatcher.utter_message(response="utter_ask_sustainability_preference")
+            return events
+
+        if intent == "change_transport":
+            events.append(SlotSet("transport_preference", None))
+            dispatcher.utter_message(response="utter_ask_transport_preference")
+            return events
+
+        dispatcher.utter_message(response="utter_choose_detail_to_change")
+        return events
+
+
+class ActionResetTrip(Action):
+    def name(self) -> Text:
+        return "action_reset_trip"
+
+    def run(self, dispatcher, tracker, domain):
+        dispatcher.utter_message(text="I have cleared the previous trip details. Let's start again.")
+        dispatcher.utter_message(response="utter_ask_origin")
+
+        return [
+            SlotSet("origin", None),
+            SlotSet("destination", None),
+            SlotSet("travel_dates", None),
+            SlotSet("budget", None),
+            SlotSet("sustainability_preference", None),
+            SlotSet("transport_preference", None),
+            SlotSet("selected_transport", None),
+            SlotSet("selected_transport_co2_kg", None),
+            SlotSet("selected_transport_source", None),
+            SlotSet("selected_hotel", None),
+            SlotSet("selected_activity", None),
+            SlotSet("handover_required", False),
+            SlotSet("fallback_count", 0),
+        ]
 
 
 class ActionRecommendTransport(Action):
@@ -1391,29 +1471,22 @@ class ActionDefaultFallback(Action):
         current_count = tracker.get_slot("fallback_count") or 0
         new_count = float(current_count) + 1
 
+        fallback_buttons = [
+            {"title": "Plan a trip", "payload": "/start_trip_planning"},
+            {"title": "Show recommendations", "payload": "/ask_recommendations"},
+            {"title": "Start over", "payload": "/reset_trip"},
+            {"title": "Human help", "payload": "/request_human_handover"}
+        ]
+
         if new_count >= 2:
             dispatcher.utter_message(
-                text=(
-                    "I am still not fully sure what you need. "
-                    "I can continue with trip planning, show carbon impact, or prepare human advisor handover."
-                ),
-                buttons=[
-                    {"title": "Plan a trip", "payload": "/start_trip_planning"},
-                    {"title": "Carbon impact", "payload": "/ask_carbon_impact"},
-                    {"title": "Human help", "payload": "/request_human_handover"}
-                ]
+                text="I am still not fully sure what you need. You can continue with the guided controls, restart the trip, or request human help.",
+                buttons=fallback_buttons
             )
         else:
             dispatcher.utter_message(
-                text=(
-                    "I am not fully sure I understood. "
-                    "Are you asking about trip planning, carbon impact, recommendations, offsets or human help?"
-                ),
-                buttons=[
-                    {"title": "Plan a trip", "payload": "/start_trip_planning"},
-                    {"title": "Recommendations", "payload": "/ask_recommendations"},
-                    {"title": "Human help", "payload": "/request_human_handover"}
-                ]
+                text="I am not fully sure I understood. Please use one of the guided buttons, or ask about trip planning, recommendations, carbon impact, offsets or human help.",
+                buttons=fallback_buttons
             )
 
         return [

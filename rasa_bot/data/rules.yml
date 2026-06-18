@@ -75,7 +75,42 @@ rules:
     steps:
       - intent: change_preferences
       - action: utter_change_preferences
-      - action: action_ask_missing_slot
+      - action: utter_choose_detail_to_change
+
+  - rule: User changes origin
+    steps:
+      - intent: change_origin
+      - action: action_handle_change_request
+
+  - rule: User changes destination
+    steps:
+      - intent: change_destination
+      - action: action_handle_change_request
+
+  - rule: User changes dates
+    steps:
+      - intent: change_dates
+      - action: action_handle_change_request
+
+  - rule: User changes budget
+    steps:
+      - intent: change_budget
+      - action: action_handle_change_request
+
+  - rule: User changes sustainability preference
+    steps:
+      - intent: change_sustainability
+      - action: action_handle_change_request
+
+  - rule: User changes transport preference
+    steps:
+      - intent: change_transport
+      - action: action_handle_change_request
+
+  - rule: User resets trip
+    steps:
+      - intent: reset_trip
+      - action: action_reset_trip
 
   - rule: Continue after origin is provided
     steps:

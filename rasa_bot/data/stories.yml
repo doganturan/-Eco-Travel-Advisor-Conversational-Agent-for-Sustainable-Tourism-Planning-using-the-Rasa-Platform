@@ -85,7 +85,7 @@ stories:
     steps:
       - intent: change_preferences
       - action: utter_change_preferences
-      - action: action_ask_missing_slot
+      - action: utter_choose_detail_to_change
 
   - story: user requests human handover
     steps:

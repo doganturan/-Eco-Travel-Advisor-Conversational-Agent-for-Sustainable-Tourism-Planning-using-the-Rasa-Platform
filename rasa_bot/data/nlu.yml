@@ -252,6 +252,64 @@ nlu:
       - update my sustainability level
       - change my travel dates
 
+  - intent: change_origin
+    examples: |
+      - change origin
+      - update origin
+      - change starting city
+      - I want to change where I travel from
+      - from another city
+
+  - intent: change_destination
+    examples: |
+      - change destination
+      - update destination
+      - I want to go somewhere else
+      - change where I am going
+      - choose another city
+
+  - intent: change_dates
+    examples: |
+      - change dates
+      - update travel dates
+      - change trip duration
+      - choose another date
+      - I want different dates
+
+  - intent: change_budget
+    examples: |
+      - change budget
+      - update budget
+      - budget
+      - change price
+      - make the budget different
+      - I want to change my budget
+
+  - intent: change_sustainability
+    examples: |
+      - change sustainability
+      - update sustainability level
+      - change eco preference
+      - make it greener
+      - change sustainability preference
+
+  - intent: change_transport
+    examples: |
+      - change transport
+      - update transport
+      - change transport mode
+      - choose another transport
+      - switch to bus
+      - switch to train
+
+  - intent: reset_trip
+    examples: |
+      - reset trip
+      - start over
+      - clear everything
+      - restart planning
+      - new trip
+
   - intent: affirm
     examples: |
       - yes
