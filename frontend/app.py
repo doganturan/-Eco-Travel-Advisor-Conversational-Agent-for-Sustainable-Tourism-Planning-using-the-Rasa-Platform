@@ -267,6 +267,7 @@ def render_hotel_cards(data):
                     <strong>Rating:</strong> {card.get("rating", "-")}<br>
                     <strong>Estimated CO₂e:</strong> {card.get("estimated_co2_kg_per_night", "-")} kg/night<br>
                     <strong>Features:</strong> {features}<br>
+                    <strong>Source:</strong> {card.get("data_source", "-")}<br>
                     <span class="small-label">Label: {card.get("carbon_label", "neutral")}</span>
                 </div>
             </div>
@@ -274,7 +275,7 @@ def render_hotel_cards(data):
             unsafe_allow_html=True
         )
 
-        if card.get("eco_certification") == "Not verified":
+        if "not verified" in str(card.get("eco_certification", "")).lower():
             st.markdown(
                 """
                 <div class="warning-box">
@@ -307,6 +308,7 @@ def render_activity_cards(data):
                     <strong>Duration:</strong> {card.get("duration_hours", "-")} hours<br>
                     <strong>Community benefit:</strong> {card.get("community_benefit", "-")}<br>
                     <strong>Description:</strong> {card.get("description", "-")}<br>
+                    <strong>Source:</strong> {card.get("data_source", "-")}<br>
                     <span class="small-label">Label: {card.get("carbon_label", "neutral")}</span>
                 </div>
             </div>

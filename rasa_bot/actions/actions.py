@@ -1,7 +1,7 @@
 from typing import Any, Text, Dict, List, Optional, Tuple
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import SlotSet, FollowupAction
 import json
 import math
 import os
@@ -863,7 +863,8 @@ class ActionRecommendTransport(Action):
             return [
                 SlotSet("selected_transport", best_option.get("mode")),
                 SlotSet("selected_transport_co2_kg", best_option.get("estimated_co2_kg")),
-                SlotSet("selected_transport_source", best_option.get("carbon_source") or best_option.get("data_source"))
+                SlotSet("selected_transport_source", best_option.get("carbon_source") or best_option.get("data_source")),
+                SlotSet("fallback_count", 0)
             ]
 
         except Exception:
@@ -924,7 +925,8 @@ class ActionCalculateCarbonImpact(Action):
             return [
                 SlotSet("selected_transport", option.get("mode")),
                 SlotSet("selected_transport_co2_kg", option.get("estimated_co2_kg")),
-                SlotSet("selected_transport_source", source)
+                SlotSet("selected_transport_source", source),
+                SlotSet("fallback_count", 0)
             ]
 
         except Exception:
@@ -1014,7 +1016,8 @@ class ActionRankOptions(Action):
             return [
                 SlotSet("selected_transport", best_option.get("mode")),
                 SlotSet("selected_transport_co2_kg", best_option.get("estimated_co2_kg")),
-                SlotSet("selected_transport_source", best_option.get("carbon_source") or best_option.get("data_source"))
+                SlotSet("selected_transport_source", best_option.get("carbon_source") or best_option.get("data_source")),
+                SlotSet("fallback_count", 0)
             ]
 
         except Exception:
@@ -1251,7 +1254,7 @@ class ActionCarbonOffsetInfo(Action):
                 }
             )
 
-            return []
+            return [SlotSet("fallback_count", 0)]
 
         except Exception:
             dispatcher.utter_message(
@@ -1314,7 +1317,7 @@ class ActionTripSummary(Action):
             }
         )
 
-        return []
+        return [SlotSet("fallback_count", 0)]
 
 
 class ActionPrepareHandover(Action):
@@ -1359,7 +1362,8 @@ class ActionPrepareHandover(Action):
         )
 
         return [
-            SlotSet("handover_required", True)
+            SlotSet("handover_required", True),
+            SlotSet("fallback_count", 0)
         ]
 
 
@@ -1403,5 +1407,6 @@ class ActionDefaultFallback(Action):
             )
 
         return [
-            SlotSet("fallback_count", new_count)
+            SlotSet("fallback_count", new_count),
+            FollowupAction("action_listen")
         ]
