@@ -22,7 +22,7 @@ rules:
   - rule: Handle out of scope message
     steps:
       - intent: out_of_scope
-      - action: utter_out_of_scope
+      - action: action_default_fallback
 
   - rule: Handle low confidence fallback
     steps:

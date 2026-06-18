@@ -271,6 +271,12 @@ nlu:
       - translate this sentence
       - I want investment advice
       - generate an image
+      - asdjkh qweqwe random
+      - blah blah random text
+      - qwerty unknown message
+      - this does not make sense
+      - random words with no meaning
+      - 12345 abc xyz
 
   - synonym: train
     examples: |
