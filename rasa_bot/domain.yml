@@ -162,8 +162,6 @@ responses:
           payload: '/provide_destination{{"destination":"Copenhagen"}}'
         - title: "Munich"
           payload: '/provide_destination{{"destination":"Munich"}}'
-        - title: "Paris"
-          payload: '/provide_destination{{"destination":"Paris"}}'
 
   utter_ask_travel_dates:
     - text: "What are your travel dates or trip duration?"

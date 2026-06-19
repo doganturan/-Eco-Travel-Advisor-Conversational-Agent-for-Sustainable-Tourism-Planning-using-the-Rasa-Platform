@@ -171,8 +171,8 @@ def add_bot_message(message):
     )
 
 
-def process_user_input(text):
-    add_user_message(text)
+def process_user_input(text, display_text=None):
+    add_user_message(display_text if display_text else text)
     bot_responses = send_message_to_rasa(text)
 
     for response in bot_responses:
@@ -238,6 +238,7 @@ def render_ranked_transport_cards(data):
                     <strong>Price:</strong> €{card.get("price_eur", "-")}<br>
                     <strong>Duration:</strong> {card.get("duration_hours", "-")} hours<br>
                     <strong>Score:</strong> {card.get("score", "-")}/100<br>
+                    <strong>Source:</strong> {card.get("data_source") or card.get("carbon_source") or "-"}<br>
                     <span class="small-label">Label: {card.get("carbon_label", "neutral")}</span>
                 </div>
             </div>
@@ -447,7 +448,7 @@ def render_message(message, index):
 
                 with columns[button_index]:
                     if st.button(title, key=f"btn_{index}_{button_index}_{title}"):
-                        process_user_input(payload)
+                        process_user_input(payload, display_text=title)
                         st.rerun()
 
 
@@ -489,19 +490,19 @@ with st.sidebar:
     st.subheader("Guided demo controls")
 
     if st.button("Start eco trip", use_container_width=True):
-        process_user_input("/start_trip_planning")
+        process_user_input("/start_trip_planning", display_text="Start eco trip")
         st.rerun()
 
     # Origin selection
     origin_opt = st.selectbox("Origin", ["Berlin", "Munich", "Hamburg", "Amsterdam"])
     if st.button("Use selected origin", use_container_width=True):
-        process_user_input(f'/provide_origin{{"origin":"{origin_opt}"}}')
+        process_user_input(f'/provide_origin{{"origin":"{origin_opt}"}}', display_text=f"Origin: {origin_opt}")
         st.rerun()
 
     # Destination selection
-    dest_opt = st.selectbox("Destination", ["Amsterdam", "Copenhagen", "Munich", "Paris"])
+    dest_opt = st.selectbox("Destination", ["Amsterdam", "Copenhagen", "Munich"])
     if st.button("Use selected destination", use_container_width=True):
-        process_user_input(f'/provide_destination{{"destination":"{dest_opt}"}}')
+        process_user_input(f'/provide_destination{{"destination":"{dest_opt}"}}', display_text=f"Destination: {dest_opt}")
         st.rerun()
 
     # Date selection
@@ -518,35 +519,35 @@ with st.sidebar:
                 dates_str = ""
         else:
             dates_str = str(dates)
-        process_user_input(f'/provide_dates{{"travel_date":"{dates_str}"}}')
+        process_user_input(f'/provide_dates{{"travel_date":"{dates_str}"}}', display_text=f"Dates: {dates_str}")
         st.rerun()
 
     # Budget selection
     budget_opt = st.selectbox("Budget (€)", [200, 300, 500, 800])
     if st.button("Use selected budget", use_container_width=True):
-        process_user_input(f'/provide_budget{{"budget":"{budget_opt} euro"}}')
+        process_user_input(f'/provide_budget{{"budget":"{budget_opt} euro"}}', display_text=f"Budget: €{budget_opt}")
         st.rerun()
 
     # Sustainability preference
     sust_opt = st.selectbox("Sustainability focus", ["low", "medium", "high"])
     if st.button("Use sustainability", use_container_width=True):
-        process_user_input(f'/provide_sustainability_preference{{"sustainability_preference":"{sust_opt}"}}')
+        process_user_input(f'/provide_sustainability_preference{{"sustainability_preference":"{sust_opt}"}}', display_text=f"Sustainability: {sust_opt.title()}")
         st.rerun()
 
     # Transport preference
     trans_opt = st.selectbox("Transport", ["train", "bus", "flight", "no preference"])
     if st.button("Use transport", use_container_width=True):
-        process_user_input(f'/provide_transport_preference{{"transport_preference":"{trans_opt}"}}')
+        process_user_input(f'/provide_transport_preference{{"transport_preference":"{trans_opt}"}}', display_text=f"Transport: {trans_opt.title()}")
         st.rerun()
 
     col1, col2 = st.columns(2)
     with col1:
         if st.button("Show recommendations", use_container_width=True):
-            process_user_input("/ask_recommendations")
+            process_user_input("/ask_recommendations", display_text="Show recommendations")
             st.rerun()
     with col2:
         if st.button("Change details", use_container_width=True):
-            process_user_input("/change_preferences")
+            process_user_input("/change_preferences", display_text="Change details")
             st.rerun()
 
     st.markdown("---")

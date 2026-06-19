@@ -1103,12 +1103,18 @@ class ActionRankOptions(Action):
             )
 
             best_option = ranked_options[0]
-            return [
-                SlotSet("selected_transport", best_option.get("mode")),
-                SlotSet("selected_transport_co2_kg", best_option.get("estimated_co2_kg")),
-                SlotSet("selected_transport_source", best_option.get("carbon_source") or best_option.get("data_source")),
-                SlotSet("fallback_count", 0)
-            ]
+            
+            events = [SlotSet("fallback_count", 0)]
+            
+            existing_selected = tracker.get_slot("selected_transport")
+            if not existing_selected:
+                events.extend([
+                    SlotSet("selected_transport", best_option.get("mode")),
+                    SlotSet("selected_transport_co2_kg", best_option.get("estimated_co2_kg")),
+                    SlotSet("selected_transport_source", best_option.get("carbon_source") or best_option.get("data_source"))
+                ])
+                
+            return events
 
         except Exception:
             dispatcher.utter_message(
