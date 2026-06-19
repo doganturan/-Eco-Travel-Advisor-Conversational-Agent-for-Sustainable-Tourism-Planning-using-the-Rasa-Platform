@@ -169,7 +169,33 @@ For cloud deployment:
 - For Hugging Face Spaces or Docker deployment, the frontend and Rasa services may need separate containers or a startup script.
 - The assignment prototype can be demonstrated locally using the three-service setup.
 
-No Docker Compose file is included because the local three-service setup is the stable demonstration path for this assignment prototype.
+## Hugging Face Spaces Docker Deployment
+
+This repository includes single-container Docker support for Hugging Face Spaces.
+
+Deployment steps:
+
+1. Create a new Hugging Face Space.
+2. Choose Docker as the SDK.
+3. Set Space visibility according to submission needs.
+4. Add these secrets in Space Settings:
+
+- `CLIMATIQ_API_KEY`
+- `GEOAPIFY_API_KEY`
+
+5. Add this variable if needed:
+
+- `RASA_API_URL=http://localhost:5005/webhooks/rest/webhook`
+
+6. Push the repository files to the Space repository.
+7. Hugging Face will build the Docker image and run `start.sh`.
+8. The public app will be available through the Space URL.
+
+In the Docker deployment, Streamlit is exposed on port `7860`. The Rasa REST server on port `5005` and the Rasa action server on port `5055` run internally inside the same container. The Streamlit frontend calls the internal Rasa REST endpoint through `RASA_API_URL=http://localhost:5005/webhooks/rest/webhook`.
+
+The `.env` file is not committed and is excluded from the Docker image. API keys should be configured as Hugging Face Space Secrets. Fallback estimates remain available if API keys are missing or live API calls fail.
+
+First startup may take time because `start.sh` trains the Rasa model inside the container before starting the action server, REST server and Streamlit frontend.
 
 ## 12. Privacy, Ethics and Sustainability Notes
 
@@ -191,4 +217,6 @@ No Docker Compose file is included because the local three-service setup is the 
 
 ## 14. Repository Submission Note
 
-GitHub repository: <insert repository link here>
+GitHub repository: https://github.com/doganturan/-Eco-Travel-Advisor-Conversational-Agent-for-Sustainable-Tourism-Planning-using-the-Rasa-Platform
+
+Live demo: <insert Hugging Face Space link here>

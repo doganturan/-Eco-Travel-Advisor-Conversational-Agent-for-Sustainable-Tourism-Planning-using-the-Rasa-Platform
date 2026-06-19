@@ -1,0 +1,13 @@
+.env
+.venv
+venv
+__pycache__
+*.pyc
+.rasa
+models
+*.tar.gz
+.git
+results
+rasa_bot/results
+.DS_Store
+.vscode
