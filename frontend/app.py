@@ -21,7 +21,7 @@ RASA_API_URL = os.getenv(
 
 st.set_page_config(
     page_title="Eco-Travel Advisor",
-    page_icon="🌱",
+    page_icon=None,
     layout="centered"
 )
 
@@ -191,8 +191,8 @@ def render_transport_card(data):
             <div class="card-meta">
                 <strong>Mode:</strong> {data.get("mode", "-")}<br>
                 <strong>Provider:</strong> {data.get("provider", "-")}<br>
-                <strong>Estimated CO₂e:</strong> {data.get("estimated_co2_kg", "-")} kg<br>
-                <strong>Price:</strong> €{data.get("price_eur", "-")}<br>
+                <strong>Estimated CO2e:</strong> {data.get("estimated_co2_kg", "-")} kg<br>
+                <strong>Price:</strong> EUR {data.get("price_eur", "-")}<br>
                 <strong>Duration:</strong> {data.get("duration_hours", "-")} hours<br>
                 <strong>Score:</strong> {data.get("score", "-")}/100<br>
                 <strong>Source:</strong> {source or "-"}<br>
@@ -230,12 +230,12 @@ def render_ranked_transport_cards(data):
             f"""
             <div class="eco-card {card_class}">
                 <div class="card-title">
-                    #{card.get("rank")} — {str(card.get("mode", "Transport")).title()}
+                    #{card.get("rank")} - {str(card.get("mode", "Transport")).title()}
                 </div>
                 <div class="card-meta">
                     <strong>Provider:</strong> {card.get("provider", "-")}<br>
-                    <strong>Estimated CO₂e:</strong> {card.get("estimated_co2_kg", "-")} kg<br>
-                    <strong>Price:</strong> €{card.get("price_eur", "-")}<br>
+                    <strong>Estimated CO2e:</strong> {card.get("estimated_co2_kg", "-")} kg<br>
+                    <strong>Price:</strong> EUR {card.get("price_eur", "-")}<br>
                     <strong>Duration:</strong> {card.get("duration_hours", "-")} hours<br>
                     <strong>Score:</strong> {card.get("score", "-")}/100<br>
                     <strong>Source:</strong> {card.get("data_source") or card.get("carbon_source") or "-"}<br>
@@ -265,9 +265,9 @@ def render_hotel_cards(data):
                 <div class="card-title">{card.get("name", "Hotel")}</div>
                 <div class="card-meta">
                     <strong>Eco certification:</strong> {card.get("eco_certification", "-")}<br>
-                    <strong>Price:</strong> €{card.get("price_per_night_eur", "-")}/night<br>
+                    <strong>Price:</strong> EUR {card.get("price_per_night_eur", "-")}/night<br>
                     <strong>Rating:</strong> {card.get("rating", "-")}<br>
-                    <strong>Estimated CO₂e:</strong> {card.get("estimated_co2_kg_per_night", "-")} kg/night<br>
+                    <strong>Estimated CO2e:</strong> {card.get("estimated_co2_kg_per_night", "-")} kg/night<br>
                     <strong>Features:</strong> {features}<br>
                     <strong>Source:</strong> {card.get("data_source", "-")}<br>
                     <span class="small-label">Label: {card.get("carbon_label", "neutral")}</span>
@@ -305,8 +305,8 @@ def render_activity_cards(data):
                 <div class="card-title">{card.get("name", "Activity")}</div>
                 <div class="card-meta">
                     <strong>Category:</strong> {card.get("category", "-")}<br>
-                    <strong>Price:</strong> €{card.get("price_eur", "-")}<br>
-                    <strong>Estimated CO₂e:</strong> {card.get("estimated_co2_kg", "-")} kg<br>
+                    <strong>Price:</strong> EUR {card.get("price_eur", "-")}<br>
+                    <strong>Estimated CO2e:</strong> {card.get("estimated_co2_kg", "-")} kg<br>
                     <strong>Duration:</strong> {card.get("duration_hours", "-")} hours<br>
                     <strong>Community benefit:</strong> {card.get("community_benefit", "-")}<br>
                     <strong>Description:</strong> {card.get("description", "-")}<br>
@@ -344,8 +344,8 @@ def render_offset_cards(data):
                 <div class="card-meta">
                     <strong>Project type:</strong> {card.get("project_type", "-")}<br>
                     <strong>Verification:</strong> {card.get("verification_level", "-")}<br>
-                    <strong>Cost per tonne:</strong> €{card.get("cost_per_tonne_eur", "-")}<br>
-                    <strong>Estimated contribution:</strong> €{card.get("estimated_contribution_eur", "-")}<br>
+                    <strong>Cost per tonne:</strong> EUR {card.get("cost_per_tonne_eur", "-")}<br>
+                    <strong>Estimated contribution:</strong> EUR {card.get("estimated_contribution_eur", "-")}<br>
                     <strong>Caution:</strong> {card.get("caution_note", "-")}
                 </div>
             </div>
@@ -462,7 +462,7 @@ if "handover_active" not in st.session_state:
     st.session_state.handover_active = False
 
 
-st.markdown('<div class="main-title">🌱 Eco-Travel Advisor</div>', unsafe_allow_html=True)
+st.markdown('<div class="main-title">Eco-Travel Advisor</div>', unsafe_allow_html=True)
 st.markdown(
     '<div class="subtitle">Plan lower-carbon trips with transport, accommodation, activity, offset and human handover support.</div>',
     unsafe_allow_html=True
@@ -486,69 +486,13 @@ with st.sidebar:
         st.session_state.sender_id = f"streamlit_user_{uuid.uuid4().hex}"
         st.rerun()
 
-    st.markdown("---")
-    st.subheader("Guided demo controls")
-
-    if st.button("Start eco trip", use_container_width=True):
-        process_user_input("/start_trip_planning", display_text="Start eco trip")
+    if st.button("Start over", use_container_width=True):
+        process_user_input("/reset_trip", display_text="Start over")
         st.rerun()
 
-    # Origin selection
-    origin_opt = st.selectbox("Origin", ["Berlin", "Munich", "Hamburg", "Amsterdam"])
-    if st.button("Use selected origin", use_container_width=True):
-        process_user_input(f'/provide_origin{{"origin":"{origin_opt}"}}', display_text=f"Origin: {origin_opt}")
+    if st.button("Change details", use_container_width=True):
+        process_user_input("/change_preferences", display_text="Change details")
         st.rerun()
-
-    # Destination selection
-    dest_opt = st.selectbox("Destination", ["Amsterdam", "Copenhagen", "Munich"])
-    if st.button("Use selected destination", use_container_width=True):
-        process_user_input(f'/provide_destination{{"destination":"{dest_opt}"}}', display_text=f"Destination: {dest_opt}")
-        st.rerun()
-
-    # Date selection
-    import datetime
-    today = datetime.date.today()
-    dates = st.date_input("Travel dates", value=(today, today + datetime.timedelta(days=3)))
-    if st.button("Use selected dates", use_container_width=True):
-        if isinstance(dates, (tuple, list)):
-            if len(dates) == 2:
-                dates_str = f"{dates[0]} to {dates[1]}"
-            elif len(dates) == 1:
-                dates_str = f"{dates[0]} to {dates[0]}"
-            else:
-                dates_str = ""
-        else:
-            dates_str = str(dates)
-        process_user_input(f'/provide_dates{{"travel_date":"{dates_str}"}}', display_text=f"Dates: {dates_str}")
-        st.rerun()
-
-    # Budget selection
-    budget_opt = st.selectbox("Budget (€)", [200, 300, 500, 800])
-    if st.button("Use selected budget", use_container_width=True):
-        process_user_input(f'/provide_budget{{"budget":"{budget_opt} euro"}}', display_text=f"Budget: €{budget_opt}")
-        st.rerun()
-
-    # Sustainability preference
-    sust_opt = st.selectbox("Sustainability focus", ["low", "medium", "high"])
-    if st.button("Use sustainability", use_container_width=True):
-        process_user_input(f'/provide_sustainability_preference{{"sustainability_preference":"{sust_opt}"}}', display_text=f"Sustainability: {sust_opt.title()}")
-        st.rerun()
-
-    # Transport preference
-    trans_opt = st.selectbox("Transport", ["train", "bus", "flight", "no preference"])
-    if st.button("Use transport", use_container_width=True):
-        process_user_input(f'/provide_transport_preference{{"transport_preference":"{trans_opt}"}}', display_text=f"Transport: {trans_opt.title()}")
-        st.rerun()
-
-    col1, col2 = st.columns(2)
-    with col1:
-        if st.button("Show recommendations", use_container_width=True):
-            process_user_input("/ask_recommendations", display_text="Show recommendations")
-            st.rerun()
-    with col2:
-        if st.button("Change details", use_container_width=True):
-            process_user_input("/change_preferences", display_text="Change details")
-            st.rerun()
 
     st.markdown("---")
     st.markdown(
@@ -566,3 +510,4 @@ user_input = st.chat_input("Type your message...")
 if user_input:
     process_user_input(user_input)
     st.rerun()
+

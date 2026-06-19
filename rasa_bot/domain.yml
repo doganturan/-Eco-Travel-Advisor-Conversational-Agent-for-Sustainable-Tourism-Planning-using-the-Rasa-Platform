@@ -126,6 +126,12 @@ slots:
     mappings:
       - type: custom
 
+  editing_slot:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
   fallback_count:
     type: float
     min_value: 0.0
@@ -178,13 +184,13 @@ responses:
   utter_ask_budget:
     - text: "What is your approximate budget for the trip?"
       buttons:
-        - title: "€200"
+        - title: "EUR 200"
           payload: '/provide_budget{{"budget":"200 euro"}}'
-        - title: "€300"
+        - title: "EUR 300"
           payload: '/provide_budget{{"budget":"300 euro"}}'
-        - title: "€500"
+        - title: "EUR 500"
           payload: '/provide_budget{{"budget":"500 euro"}}'
-        - title: "€800"
+        - title: "EUR 800"
           payload: '/provide_budget{{"budget":"800 euro"}}'
 
   utter_ask_sustainability_preference:

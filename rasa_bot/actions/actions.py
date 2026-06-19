@@ -51,6 +51,20 @@ def normalise(value: Optional[str]) -> str:
     return str(value).strip().lower()
 
 
+def get_previous_slot_value(tracker: Tracker, slot_name: str):
+    found_current_user_event = False
+
+    for event in reversed(tracker.events):
+        if event.get("event") == "user":
+            found_current_user_event = True
+            continue
+
+        if found_current_user_event and event.get("event") == "slot" and event.get("name") == slot_name:
+            return event.get("value")
+
+    return None
+
+
 def safe_float(value: Any, default: float = 0.0) -> float:
     try:
         return float(value)
@@ -787,6 +801,61 @@ class ActionAskMissingSlot(Action):
             dispatcher.utter_message(response="utter_ask_destination")
             return [SlotSet("fallback_count", 0)]
 
+        origin = tracker.get_slot("origin")
+        destination = tracker.get_slot("destination")
+        latest_intent = tracker.get_intent_of_latest_message()
+        editing_slot = tracker.get_slot("editing_slot")
+
+        slot_intent_map = {
+            "provide_origin": "origin",
+            "provide_destination": "destination",
+            "provide_dates": "travel_dates",
+            "provide_budget": "budget",
+            "provide_sustainability_preference": "sustainability_preference",
+            "provide_transport_preference": "transport_preference",
+        }
+
+        required_slots_filled = all([
+            tracker.get_slot("origin"),
+            tracker.get_slot("destination"),
+            tracker.get_slot("travel_dates"),
+            tracker.get_slot("budget"),
+            tracker.get_slot("sustainability_preference"),
+            tracker.get_slot("transport_preference"),
+        ])
+
+        provided_slot = slot_intent_map.get(latest_intent)
+
+        if required_slots_filled and provided_slot and editing_slot != provided_slot:
+            restore_events = [SlotSet("fallback_count", 0)]
+
+            previous_value = get_previous_slot_value(tracker, provided_slot)
+            if previous_value is not None:
+                restore_events.append(SlotSet(provided_slot, previous_value))
+
+            dispatcher.utter_message(
+                text=(
+                    "I already have the trip details. If you want to update one of them, "
+                    "please use Change details first."
+                ),
+                buttons=[
+                    {"title": "Show recommendations", "payload": "/ask_recommendations"},
+                    {"title": "Change details", "payload": "/change_preferences"},
+                    {"title": "Start over", "payload": "/reset_trip"}
+                ]
+            )
+            return restore_events
+
+        if origin and destination and normalise(origin) == normalise(destination):
+            dispatcher.utter_message(
+                text="The origin and destination must be different. Please choose a different destination."
+            )
+            dispatcher.utter_message(response="utter_ask_destination")
+            return [
+                SlotSet("destination", None),
+                SlotSet("fallback_count", 0)
+            ]
+
         if not tracker.get_slot("travel_dates"):
             dispatcher.utter_message(response="utter_ask_travel_dates")
             return [SlotSet("fallback_count", 0)]
@@ -803,11 +872,25 @@ class ActionAskMissingSlot(Action):
             dispatcher.utter_message(response="utter_ask_transport_preference")
             return [SlotSet("fallback_count", 0)]
 
+        if editing_slot:
+            dispatcher.utter_message(
+                text="Updated. Would you like to show the recommendations again or change another detail?",
+                buttons=[
+                    {"title": "Show recommendations", "payload": "/ask_recommendations"},
+                    {"title": "Change another detail", "payload": "/change_preferences"},
+                    {"title": "Start over", "payload": "/reset_trip"}
+                ]
+            )
+            return [
+                SlotSet("editing_slot", None),
+                SlotSet("fallback_count", 0)
+            ]
+
         dispatcher.utter_message(
-            text="Great, I have the key trip details. Would you like to show or update the recommendations?",
+            text="I have the key trip details. What would you like to do next?",
             buttons=[
                 {"title": "Show recommendations", "payload": "/ask_recommendations"},
-                {"title": "Change another detail", "payload": "/change_preferences"},
+                {"title": "Change details", "payload": "/change_preferences"},
                 {"title": "Start over", "payload": "/reset_trip"}
             ]
         )
@@ -832,31 +915,37 @@ class ActionHandleChangeRequest(Action):
 
         if intent == "change_origin":
             events.append(SlotSet("origin", None))
+            events.append(SlotSet("editing_slot", "origin"))
             dispatcher.utter_message(response="utter_ask_origin")
             return events
 
         if intent == "change_destination":
             events.append(SlotSet("destination", None))
+            events.append(SlotSet("editing_slot", "destination"))
             dispatcher.utter_message(response="utter_ask_destination")
             return events
 
         if intent == "change_dates":
             events.append(SlotSet("travel_dates", None))
+            events.append(SlotSet("editing_slot", "travel_dates"))
             dispatcher.utter_message(response="utter_ask_travel_dates")
             return events
 
         if intent == "change_budget":
             events.append(SlotSet("budget", None))
+            events.append(SlotSet("editing_slot", "budget"))
             dispatcher.utter_message(response="utter_ask_budget")
             return events
 
         if intent == "change_sustainability":
             events.append(SlotSet("sustainability_preference", None))
+            events.append(SlotSet("editing_slot", "sustainability_preference"))
             dispatcher.utter_message(response="utter_ask_sustainability_preference")
             return events
 
         if intent == "change_transport":
             events.append(SlotSet("transport_preference", None))
+            events.append(SlotSet("editing_slot", "transport_preference"))
             dispatcher.utter_message(response="utter_ask_transport_preference")
             return events
 
@@ -885,6 +974,7 @@ class ActionResetTrip(Action):
             SlotSet("selected_hotel", None),
             SlotSet("selected_activity", None),
             SlotSet("handover_required", False),
+            SlotSet("editing_slot", None),
             SlotSet("fallback_count", 0),
         ]
 
@@ -905,6 +995,15 @@ class ActionRecommendTransport(Action):
             destination = tracker.get_slot("destination")
             sustainability_preference = tracker.get_slot("sustainability_preference")
             transport_preference = tracker.get_slot("transport_preference")
+
+            if origin and destination and normalise(origin) == normalise(destination):
+                dispatcher.utter_message(
+                    text="The origin and destination are the same. Please choose a different destination before I compare transport options."
+                )
+                return [
+                    SlotSet("destination", None),
+                    SlotSet("fallback_count", 0)
+                ]
 
             best_option = choose_best_transport(
                 origin,
@@ -954,6 +1053,7 @@ class ActionRecommendTransport(Action):
                 SlotSet("selected_transport", best_option.get("mode")),
                 SlotSet("selected_transport_co2_kg", best_option.get("estimated_co2_kg")),
                 SlotSet("selected_transport_source", best_option.get("carbon_source") or best_option.get("data_source")),
+                SlotSet("editing_slot", None),
                 SlotSet("fallback_count", 0)
             ]
 
@@ -1104,7 +1204,10 @@ class ActionRankOptions(Action):
 
             best_option = ranked_options[0]
             
-            events = [SlotSet("fallback_count", 0)]
+            events = [
+                SlotSet("editing_slot", None),
+                SlotSet("fallback_count", 0)
+            ]
             
             existing_selected = tracker.get_slot("selected_transport")
             if not existing_selected:
@@ -1426,6 +1529,30 @@ class ActionPrepareHandover(Action):
         tracker: Tracker,
         domain: Dict[Text, Any]
     ) -> List[Dict[Text, Any]]:
+
+        last_action_name = None
+        for event in reversed(tracker.events):
+            if event.get("event") == "action":
+                action_name = event.get("name")
+                if action_name not in ["action_prepare_handover", "action_listen"]:
+                    last_action_name = action_name
+                    break
+
+        latest_intent = tracker.get_intent_of_latest_message()
+
+        if latest_intent == "affirm" and last_action_name != "utter_handover_offer":
+            dispatcher.utter_message(
+                text="I can prepare a human advisor handover after you request human help and confirm it."
+            )
+            dispatcher.utter_message(
+                text="Would you like human advisor help?",
+                buttons=[
+                    {"title": "Human help", "payload": "/request_human_handover"},
+                    {"title": "Show recommendations", "payload": "/ask_recommendations"},
+                    {"title": "Start over", "payload": "/reset_trip"}
+                ]
+            )
+            return [SlotSet("fallback_count", 0)]
 
         handover_context = {
             "origin": tracker.get_slot("origin"),
