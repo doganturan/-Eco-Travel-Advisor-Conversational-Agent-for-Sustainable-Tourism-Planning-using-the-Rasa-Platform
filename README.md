@@ -4,6 +4,8 @@ sdk: docker
 app_port: 7860
 ---
 
+# Live Demo: [Eco-Travel Advisor](https://huggingface.co/spaces/doganturan52/eco-travel-advisor-rasa)
+
 # Eco-Travel Advisor
 
 ## Conversational Agent for Sustainable Tourism Planning using the Rasa Platform
@@ -224,5 +226,3 @@ First startup may take time because `start.sh` trains the Rasa model inside the 
 ## 14. Repository Submission Note
 
 GitHub repository: https://github.com/doganturan/-Eco-Travel-Advisor-Conversational-Agent-for-Sustainable-Tourism-Planning-using-the-Rasa-Platform
-
-Live demo: <insert Hugging Face Space link here>
