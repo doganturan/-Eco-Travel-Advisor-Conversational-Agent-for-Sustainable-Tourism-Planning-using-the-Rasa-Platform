@@ -1,3 +1,9 @@
+---
+title: Eco Travel Advisor Rasa
+sdk: docker
+app_port: 7860
+---
+
 # Eco-Travel Advisor
 
 ## Conversational Agent for Sustainable Tourism Planning using the Rasa Platform
